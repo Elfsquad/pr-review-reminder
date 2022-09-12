@@ -1,40 +1,28 @@
 const core = require('@actions/core');
-const { GITHUB_TOKEN, GITHUB_REPOSITORY, GITHUB_API_URL } = process.env;
-import fetch from 'node-fetch';
-
-const PR_ENDPOINT = `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls`;
+const github = require('@actions/github');
 const REVIEW_ENDPOINT = `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/{id}/reviews`;
 
 const approvalCount = core.getInput('approval-count');
 
-const getHeaders = () => {
-  return {
-    Authorization: `token ${GITHUB_TOKEN}`,
-  };
+const getPrs = async () => {
+  return await octokit.request('GET /repos/{owner}/{repo}/pulls', {
+    owner: context.repo.owner,
+    repo: context.repo.repo
+  });
 }
 
-const getPrs = async () => {
-  const response = await fetch(PR_ENDPOINT, {
-    method: 'GET',
-    headers: getHeaders()
+const getReviews = async (pr) => {
+  return await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    pull_number: pr.id
   });
-  const text = response.text();
-  core.info(`response: ${response.status} ${text}`);
-  return undefined;
 }
 
 const hasReviewers = (pr) => {
   return pr.requested_reviewers.length > 0 || pr.requested_teams.length > 0;
 }
 
-const getReviews = async (pr) => {
-  const url = REVIEW_ENDPOINT.replace('{id}', pr.id);
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: getHeaders()
-  });
-  return response.json().data;
-}
 
 const hasEnoughApprovals = async (pr) => {
   const reviews = await getReviews(pr);
@@ -54,6 +42,9 @@ const getPrsEligbleForReminder = async (prs) => {
   return ret;
 }
 
+const remind = async (pr) => {
+
+}
 
 (async function () {
   try {
@@ -61,6 +52,10 @@ const getPrsEligbleForReminder = async (prs) => {
     core.info(`There are total of ${prs.length} prs.`);
     const prsEligbleForReminder = await getPrsEligbleForReminder(prs);
     core.info(`A total of ${prsEligbleForReminder} are elgible for a reminder.`);
+
+    for(const pr in prsEligbleForReminder) {
+      await remind(pr);
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
