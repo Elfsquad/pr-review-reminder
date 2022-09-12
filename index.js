@@ -13,23 +13,25 @@ const getHeaders = () => {
   };
 }
 
-const getPrs = () => {
-  return fetch(PR_ENDPOINT, {
+const getPrs = async () => {
+  const response = await fetch(PR_ENDPOINT, {
     method: 'GET',
     headers: getHeaders()
-  }).then(r => r.json());
+  });
+  return response.json().data;
 }
 
 const hasReviewers = (pr) => {
   return pr.requested_reviewers.length > 0 || pr.requested_teams.length > 0;
 }
 
-const getReviews = (pr) => {
+const getReviews = async (pr) => {
   const url = REVIEW_ENDPOINT.replace('{id}', pr.id);
-  return fetch(url, {
+  const response = await fetch(url, {
     method: 'GET',
     headers: getHeaders()
-  }).then(r => r.json());
+  });
+  return response.json().data;
 }
 
 const hasEnoughApprovals = async (pr) => {
@@ -55,7 +57,7 @@ const getPrsEligbleForReminder = async (prs) => {
   try {
     const prs = await getPrs();
     core.info(`There are total of ${prs.length} prs.`);
-    const prsEligbleForReminder = await getPrsEligbleForReminder(prs.data);
+    const prsEligbleForReminder = await getPrsEligbleForReminder(prs);
     core.info(`A total of ${prsEligbleForReminder} are elgible for a reminder.`);
   } catch (error) {
     core.setFailed(error.message);
