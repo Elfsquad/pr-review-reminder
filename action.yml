@@ -1,0 +1,6 @@
+name: pr-review-reminder
+description: Receive reminders to review PR's
+inputs:
+  approval-count:
+    description: 'The amount of approvals required, before a PR can be merged.'
+    required: true
