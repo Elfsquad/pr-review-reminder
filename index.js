@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+import fetch from 'node-fetch';
 const { GITHUB_TOKEN, GITHUB_REPOSITORY, GITHUB_API_URL } = process.env;
 
 const PR_ENDPOINT = `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls`;
