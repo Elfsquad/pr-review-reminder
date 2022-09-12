@@ -1,8 +1,8 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const REVIEW_ENDPOINT = `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/{id}/reviews`;
+import { getInput, info, setFailed } from '@actions/core';
+import { context as _context } from '@actions/github';
 
-const approvalCount = core.getInput('approval-count');
+const context = _context;
+const approvalCount = getInput('approval-count');
 
 const getPrs = async () => {
   return await octokit.request('GET /repos/{owner}/{repo}/pulls', {
@@ -31,7 +31,6 @@ const hasEnoughApprovals = async (pr) => {
 
 const getPrsEligbleForReminder = async (prs) => {
   const ret = [];
-  const filteredPrs = prs.filter(hasReviewers);
 
   for(const pr in prs) {
     if (await hasEnoughApprovals(pr)) {
@@ -39,7 +38,7 @@ const getPrsEligbleForReminder = async (prs) => {
     }
     ret.push(pr);
   }
-  return ret;
+  return ret.filter(hasReviewers);
 }
 
 const remind = async (pr) => {
@@ -49,15 +48,15 @@ const remind = async (pr) => {
 (async function () {
   try {
     const prs = await getPrs();
-    core.info(`There are total of ${prs.length} prs.`);
+    info(`There are total of ${prs.length} prs.`);
     const prsEligbleForReminder = await getPrsEligbleForReminder(prs);
-    core.info(`A total of ${prsEligbleForReminder} are elgible for a reminder.`);
+    info(`A total of ${prsEligbleForReminder} are elgible for a reminder.`);
 
     for(const pr in prsEligbleForReminder) {
       await remind(pr);
     }
   } catch (error) {
-    core.setFailed(error.message);
+    setFailed(error.message);
   }
 })();
 
