@@ -18,9 +18,9 @@ const getPrs = async () => {
     method: 'GET',
     headers: getHeaders()
   });
-  const json = response.json();
-  core.info(`response: ${response.status} ${JSON.stringify(json)}`);
-  return json.data;
+  const text = response.text();
+  core.info(`response: ${response.status} ${text}`);
+  return undefined;
 }
 
 const hasReviewers = (pr) => {
