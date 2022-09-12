@@ -1,6 +1,13 @@
 name: pr-review-reminder
 description: Receive reminders to review PR's
+branding:
+  color: blue
+  icon: clock
+runs:
+  using: node12
+  main: dist/index.js
 inputs:
   approval-count:
     description: 'The amount of approvals required, before a PR can be merged.'
     required: true
+
