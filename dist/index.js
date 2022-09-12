@@ -7877,8 +7877,8 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
 
 ;// CONCATENATED MODULE: ./index.js
 const core = __nccwpck_require__(186);
-
 const { GITHUB_TOKEN, GITHUB_REPOSITORY, GITHUB_API_URL } = process.env;
+
 
 const PR_ENDPOINT = `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls`;
 const REVIEW_ENDPOINT = `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/{id}/reviews`;
@@ -7896,6 +7896,7 @@ const getPrs = async () => {
     method: 'GET',
     headers: getHeaders()
   });
+  core.debug(`response: ${response.json()}`);
   return response.json().data;
 }
 

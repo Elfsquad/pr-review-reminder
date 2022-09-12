@@ -1,6 +1,6 @@
 const core = require('@actions/core');
-import fetch from 'node-fetch';
 const { GITHUB_TOKEN, GITHUB_REPOSITORY, GITHUB_API_URL } = process.env;
+import fetch from 'node-fetch';
 
 const PR_ENDPOINT = `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls`;
 const REVIEW_ENDPOINT = `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/{id}/reviews`;
@@ -18,6 +18,7 @@ const getPrs = async () => {
     method: 'GET',
     headers: getHeaders()
   });
+  core.debug(`response: ${response.json()}`);
   return response.json().data;
 }
 
