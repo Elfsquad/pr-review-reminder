@@ -7896,8 +7896,9 @@ const getPrs = async () => {
     method: 'GET',
     headers: getHeaders()
   });
-  core.debug(`response: ${response.json()}`);
-  return response.json().data;
+  const json = response.json();
+  core.info(`response: ${json}`);
+  return json.data;
 }
 
 const hasReviewers = (pr) => {
