@@ -7897,7 +7897,7 @@ const getPrs = async () => {
     headers: getHeaders()
   });
   const json = response.json();
-  core.info(`response: ${JSON.stringify(json)}`);
+  core.info(`response: ${response.status} ${JSON.stringify(json)}`);
   return json.data;
 }
 
