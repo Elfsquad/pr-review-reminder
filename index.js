@@ -19,7 +19,7 @@ const getPrs = async () => {
     headers: getHeaders()
   });
   const json = response.json();
-  core.info(`response: ${json}`);
+  core.info(`response: ${JSON.stringify(json)}`);
   return json.data;
 }
 
