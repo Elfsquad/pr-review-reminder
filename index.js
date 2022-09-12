@@ -1,7 +1,8 @@
 import { getInput, info, setFailed } from '@actions/core';
+const { GITHUB_TOKEN } = process.env;
 import { context, getOctokit } from '@actions/github';
 
-const octokit = getOctokit(token);
+const octokit = getOctokit(GITHUB_TOKEN);
 const approvalCount = getInput('approval-count');
 
 const getPrs = async () => {
