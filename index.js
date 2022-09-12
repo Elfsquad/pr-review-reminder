@@ -6,14 +6,14 @@ const octokit = getOctokit(GITHUB_TOKEN);
 const approvalCount = getInput('approval-count');
 
 const getPrs = async () => {
-  return await octokit.request('GET /repos/{owner}/{repo}/pulls', {
+  return await octokit.rest.pulls.list({
     owner: context.repo.owner,
     repo: context.repo.repo
   });
 }
 
 const getReviews = async (pr) => {
-  return await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
+  return await octokit.rest.pulls.listReviews({
     owner: context.repo.owner,
     repo: context.repo.repo,
     pull_number: pr.id

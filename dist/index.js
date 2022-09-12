@@ -8496,14 +8496,14 @@ const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(GITH
 const approvalCount = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('approval-count');
 
 const getPrs = async () => {
-  return await octokit.request('GET /repos/{owner}/{repo}/pulls', {
+  return await octokit.rest.pulls.list({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo
   });
 }
 
 const getReviews = async (pr) => {
-  return await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
+  return await octokit.rest.pulls.listReviews({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
     pull_number: pr.id
