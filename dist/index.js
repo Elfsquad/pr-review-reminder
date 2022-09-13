@@ -8500,7 +8500,7 @@ const getPrs = async () => {
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
   });
-  core.info(test);
+  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(test);
 
   return await octokit.rest.pulls.list({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
