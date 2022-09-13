@@ -65,6 +65,7 @@ const remindToReview = async (prs) => {
   let message = "";
 
   for (const pr of prs) {
+    info(JSON.stringify(pr))
     for (const reviewer of pr.requested_reviewers) {
       message += `Hey @${reviewer.login}, the PR "${pr.title}" is waiting for your review: [${pr.html_url}](${pr.html_url})`;
     }
