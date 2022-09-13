@@ -13455,7 +13455,7 @@ const getPrs = async () => {
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
     state: 'open'
   });
-  return response.data;
+  return response.data.filter(p => !p.draft);
 }
 
 const getReviews = async (pr) => {

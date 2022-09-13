@@ -15,7 +15,7 @@ const getPrs = async () => {
     repo: context.repo.repo,
     state: 'open'
   });
-  return response.data;
+  return response.data.filter(p => !p.draft);
 }
 
 const getReviews = async (pr) => {
