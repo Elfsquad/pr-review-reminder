@@ -10,7 +10,7 @@ const getPrs = async () => {
     owner: context.repo.owner,
     repo: context.repo.repo,
   });
-  info(test.data.tag);
+  info(test.data.tag_name);
 
   return await octokit.rest.pulls.list({
     owner: context.repo.owner,
