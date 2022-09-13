@@ -6,6 +6,12 @@ const octokit = getOctokit(token);
 const approvalCount = getInput('approval-count');
 
 const getPrs = async () => {
+  const test = await octokit.rest.repos.getLatestRelease({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+  });
+  core.info(test);
+
   return await octokit.rest.pulls.list({
     owner: context.repo.owner,
     repo: context.repo.repo
