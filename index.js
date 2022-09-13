@@ -54,7 +54,7 @@ const remind = async (pr) => {
     const prs = await getPrs();
     info(`There are total of ${prs.length} prs.`);
     const prsEligbleForReminder = await getPrsEligbleForReminder(prs);
-    info(`A total of ${prsEligbleForReminder} are elgible for a reminder.`);
+    info(`A total of ${prsEligbleForReminder.length} are elgible for a reminder.`);
 
     for(const pr of prsEligbleForReminder) {
       await remind(pr);

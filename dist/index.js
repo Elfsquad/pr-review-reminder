@@ -8544,7 +8544,7 @@ const remind = async (pr) => {
     const prs = await getPrs();
     (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`There are total of ${prs.length} prs.`);
     const prsEligbleForReminder = await getPrsEligbleForReminder(prs);
-    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForReminder} are elgible for a reminder.`);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForReminder.length} are elgible for a reminder.`);
 
     for(const pr of prsEligbleForReminder) {
       await remind(pr);
