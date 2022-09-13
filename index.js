@@ -80,9 +80,9 @@ const remindToMerge = async (prs) => {
     info(`There are total of ${prs.length} prs.`);
 
     const prsEligbleForReviewReminder = await getPrsEligbleForReminder(prs);
-    info(`A total of ${prsEligbleForReminder.length} are elgible for a review reminder.`);
+    info(`A total of ${prsEligbleForReviewReminder.length} are elgible for a review reminder.`);
 
-    const prsEligbleForMergeReminder = prs.filter(p => !prsEligbleForReminder.includes(p));
+    const prsEligbleForMergeReminder = prs.filter(p => !prsEligbleForReviewReminder.includes(p));
     info(`A total of ${prsEligbleForMergeReminder.length} are elgible for a merge reminder.`);
 
     remindToReview(prsEligbleForMergeReminder);

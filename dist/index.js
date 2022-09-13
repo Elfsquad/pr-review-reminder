@@ -8570,9 +8570,9 @@ const remindToMerge = async (prs) => {
     (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`There are total of ${prs.length} prs.`);
 
     const prsEligbleForReviewReminder = await getPrsEligbleForReminder(prs);
-    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForReminder.length} are elgible for a review reminder.`);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForReviewReminder.length} are elgible for a review reminder.`);
 
-    const prsEligbleForMergeReminder = prs.filter(p => !prsEligbleForReminder.includes(p));
+    const prsEligbleForMergeReminder = prs.filter(p => !prsEligbleForReviewReminder.includes(p));
     (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForMergeReminder.length} are elgible for a merge reminder.`);
 
     remindToReview(prsEligbleForMergeReminder);
