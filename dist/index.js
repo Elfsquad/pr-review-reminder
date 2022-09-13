@@ -13505,6 +13505,7 @@ const remindToReview = async (prs) => {
   let message = "";
 
   for (const pr of prs) {
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(JSON.stringify(pr));
     for (const reviewer of pr.requested_reviewers) {
       message += `Hey @${reviewer.login}, the PR "${pr.name}" is wating for your review: [${obj.url}](${obj.url})`;
     }
