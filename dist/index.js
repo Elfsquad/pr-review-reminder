@@ -13538,12 +13538,12 @@ const remindToMerge = async (prs) => {
     (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`There are total of ${prs.length} prs.`);
 
     const prsEligbleForReviewReminder = await getPrsEligbleForReminder(prs);
-    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForReviewReminder.length} are elgible for a review reminder.`);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForReviewReminder.length} are eligible for a review reminder.`);
 
     const prsEligbleForMergeReminder = prs.filter(p => !prsEligbleForReviewReminder.includes(p));
-    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForMergeReminder.length} are elgible for a merge reminder.`);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForMergeReminder.length} are eligible for a merge reminder.`);
 
-    remindToReview(prsEligbleForMergeReminder);
+    remindToReview(prsEligbleForReviewReminder);
     remindToMerge(prsEligbleForMergeReminder);
   } catch (error) {
     throw error;
