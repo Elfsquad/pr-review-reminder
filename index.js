@@ -6,11 +6,13 @@ const octokit = getOctokit(token);
 const approvalCount = getInput('approval-count');
 
 const getPrs = async () => {
-  return await octokit.rest.pulls.list({
+  const response = await octokit.rest.pulls.list({
     owner: context.repo.owner,
     repo: context.repo.repo,
     state: 'open'
   });
+  info(JSON.stringify(response.data));
+  return response.data;
 }
 
 const getReviews = async (pr) => {
