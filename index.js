@@ -1,5 +1,6 @@
 import { getInput, info, setFailed } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
+const axios = require('axios');
 
 const token = getInput('token');
 const webhookUri = getInput('webhook-uri');
@@ -49,13 +50,14 @@ const getPrsEligbleForReminder = async (prs) => {
 }
 
 const sendNotification = async (message) => {
-  return fetch(webhookUri, {
+  return axios({
     method: 'POST',
-    body: {
+    url: webhookUri,
+    data: {
       channel: channel,
-      username: 'PR review reminder',
+      username: 'PR Review Reminder',
       text: message,
-    }
+    },
   });
 }
 
