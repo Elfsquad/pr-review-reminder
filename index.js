@@ -50,6 +50,7 @@ const getPrsEligbleForReminder = async (prs) => {
 }
 
 const sendNotification = async (message) => {
+  info(message)
   return await axios({
     method: 'POST',
     url: webhookUri,

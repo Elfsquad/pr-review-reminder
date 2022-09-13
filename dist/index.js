@@ -13490,6 +13490,7 @@ const getPrsEligbleForReminder = async (prs) => {
 }
 
 const sendNotification = async (message) => {
+  ;(0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(message)
   return await axios({
     method: 'POST',
     url: webhookUri,
