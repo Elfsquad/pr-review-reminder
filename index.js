@@ -1,14 +1,11 @@
 import { getInput, info, setFailed } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
-const { GITHUB_TOKEN } = process.env;
 
-const octokit = getOctokit(GITHUB_TOKEN);
+const token = core.getInput('token');
+const octokit = getOctokit(token);
 const approvalCount = getInput('approval-count');
 
 const getPrs = async () => {
-  info(`owner: ${context.repo.owner}`);
-  info(`repo: ${context.repo.repo}`);
-  info(`token: ${GITHUB_TOKEN}`);
   return await octokit.rest.pulls.list({
     owner: context.repo.owner,
     repo: context.repo.repo

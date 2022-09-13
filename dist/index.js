@@ -8490,15 +8490,12 @@ __nccwpck_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_1__);
 
 
-const { GITHUB_TOKEN } = process.env;
 
-const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(GITHUB_TOKEN);
+const token = core.getInput('token');
+const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(token);
 const approvalCount = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('approval-count');
 
 const getPrs = async () => {
-  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`owner: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}`);
-  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`repo: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}`);
-  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`token: ${GITHUB_TOKEN}`);
   return await octokit.rest.pulls.list({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo
