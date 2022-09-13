@@ -13509,6 +13509,7 @@ const remindToReview = async (prs) => {
       message += `Hey @${reviewer.login}, the PR "${pr.name}" is wating for your review: [${obj.url}](${obj.url})`;
     }
   }
+  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Sending message: ${message}`);
   await sendNotification(message);
 }
 

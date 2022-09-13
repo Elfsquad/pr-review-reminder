@@ -69,6 +69,7 @@ const remindToReview = async (prs) => {
       message += `Hey @${reviewer.login}, the PR "${pr.name}" is wating for your review: [${obj.url}](${obj.url})`;
     }
   }
+  info(`Sending message: ${message}`);
   await sendNotification(message);
 }
 
