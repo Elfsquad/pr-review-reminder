@@ -50,7 +50,6 @@ const getPrsEligbleForReminder = async (prs) => {
 }
 
 const sendNotification = async (message) => {
-  info(message)
   return await axios({
     method: 'POST',
     url: webhookUri,
@@ -66,9 +65,8 @@ const remindToReview = async (prs) => {
   let message = "";
 
   for (const pr of prs) {
-    info(JSON.stringify(pr))
     for (const reviewer of pr.requested_reviewers) {
-      message += `Hey @${reviewer.login}, the PR "${pr.title}" is waiting for your review: [${pr.html_url}](${pr.html_url})\n`;
+      message += `Hey @${reviewer.login}, the PR "${pr.title}" is waiting for your review: [${pr.html_url}](${pr.html_url})` + '\n\n';
     }
   }
 
@@ -83,7 +81,7 @@ const remindToMerge = async (prs) => {
   let message = "";
 
   for (const pr of prs) {
-    message += `Hey @${pr.user.login}, the PR "${pr.title}" is ready to be merged: [${pr.html_url}](${pr.html_url})\n`;
+    message += `Hey @${pr.user.login}, the PR "${pr.title}" is ready to be merged: [${pr.html_url}](${pr.html_url})` + '\n\n';
   }
 
   if (!message) {
