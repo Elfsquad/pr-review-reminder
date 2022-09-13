@@ -8492,6 +8492,9 @@ __nccwpck_require__.r(__webpack_exports__);
 
 
 const token = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('token');
+const webhookUri = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('webhook-uri');
+const channel = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('channel');
+
 const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(token);
 const approvalCount = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('approval-count');
 
@@ -8535,7 +8538,29 @@ const getPrsEligbleForReminder = async (prs) => {
   return ret.filter(hasReviewers);
 }
 
-const remind = async (pr) => {
+const sendNotification = async (message) => {
+  return fetch(webhookUri, {
+    method: 'POST',
+    body: {
+      channel: channel,
+      username: 'PR review reminder',
+      text: message,
+    }
+  });
+}
+
+const remindToReview = async (prs) => {
+  let message = "";
+
+  for (const pr of prs) {
+    for (const reviewer of pr.requested_reviewers) {
+      message += `Hey @${reviewer.login}, the PR "${pr.name}" is wating for your review: [${obj.url}](${obj.url})`;
+    }
+  }
+  sendNotification(message);
+}
+
+const remindToMerge = async (prs) => {
 
 }
 
@@ -8543,12 +8568,15 @@ const remind = async (pr) => {
   try {
     const prs = await getPrs();
     (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`There are total of ${prs.length} prs.`);
-    const prsEligbleForReminder = await getPrsEligbleForReminder(prs);
-    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForReminder.length} are elgible for a reminder.`);
 
-    for(const pr of prsEligbleForReminder) {
-      await remind(pr);
-    }
+    const prsEligbleForReviewReminder = await getPrsEligbleForReminder(prs);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForReminder.length} are elgible for a review reminder.`);
+
+    const prsEligbleForMergeReminder = prs.filter(p => !prsEligbleForReminder.includes(p));
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`A total of ${prsEligbleForMergeReminder.length} are elgible for a merge reminder.`);
+
+    remindToReview(prsEligbleForMergeReminder);
+    remindToMerge(prsEligbleForMergeReminder);
   } catch (error) {
     throw error;
     (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed)(error.message);

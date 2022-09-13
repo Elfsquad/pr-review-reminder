@@ -2,6 +2,9 @@ import { getInput, info, setFailed } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 
 const token = getInput('token');
+const webhookUri = getInput('webhook-uri');
+const channel = getInput('channel');
+
 const octokit = getOctokit(token);
 const approvalCount = getInput('approval-count');
 
@@ -45,7 +48,29 @@ const getPrsEligbleForReminder = async (prs) => {
   return ret.filter(hasReviewers);
 }
 
-const remind = async (pr) => {
+const sendNotification = async (message) => {
+  return fetch(webhookUri, {
+    method: 'POST',
+    body: {
+      channel: channel,
+      username: 'PR review reminder',
+      text: message,
+    }
+  });
+}
+
+const remindToReview = async (prs) => {
+  let message = "";
+
+  for (const pr of prs) {
+    for (const reviewer of pr.requested_reviewers) {
+      message += `Hey @${reviewer.login}, the PR "${pr.name}" is wating for your review: [${obj.url}](${obj.url})`;
+    }
+  }
+  sendNotification(message);
+}
+
+const remindToMerge = async (prs) => {
 
 }
 
@@ -53,12 +78,15 @@ const remind = async (pr) => {
   try {
     const prs = await getPrs();
     info(`There are total of ${prs.length} prs.`);
-    const prsEligbleForReminder = await getPrsEligbleForReminder(prs);
-    info(`A total of ${prsEligbleForReminder.length} are elgible for a reminder.`);
 
-    for(const pr of prsEligbleForReminder) {
-      await remind(pr);
-    }
+    const prsEligbleForReviewReminder = await getPrsEligbleForReminder(prs);
+    info(`A total of ${prsEligbleForReminder.length} are elgible for a review reminder.`);
+
+    const prsEligbleForMergeReminder = prs.filter(p => !prsEligbleForReminder.includes(p));
+    info(`A total of ${prsEligbleForMergeReminder.length} are elgible for a merge reminder.`);
+
+    remindToReview(prsEligbleForMergeReminder);
+    remindToMerge(prsEligbleForMergeReminder);
   } catch (error) {
     throw error;
     setFailed(error.message);
