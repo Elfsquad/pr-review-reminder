@@ -15,6 +15,7 @@ const getPrs = async () => {
 }
 
 const getReviews = async (pr) => {
+  info(`Retrieving reviews for ${pr.id}`);
   const response = await octokit.rest.pulls.listReviews({
     owner: context.repo.owner,
     repo: context.repo.repo,

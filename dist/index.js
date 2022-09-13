@@ -8505,6 +8505,7 @@ const getPrs = async () => {
 }
 
 const getReviews = async (pr) => {
+  ;(0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Retrieving reviews for ${pr.id}`);
   const response = await octokit.rest.pulls.listReviews({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
