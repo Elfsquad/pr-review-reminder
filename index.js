@@ -1,7 +1,7 @@
 import { getInput, info, setFailed } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 
-const token = core.getInput('token');
+const token = getInput('token');
 const octokit = getOctokit(token);
 const approvalCount = getInput('approval-count');
 

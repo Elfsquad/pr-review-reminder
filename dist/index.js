@@ -8491,7 +8491,7 @@ __nccwpck_require__.r(__webpack_exports__);
 
 
 
-const token = core.getInput('token');
+const token = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('token');
 const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(token);
 const approvalCount = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('approval-count');
 
