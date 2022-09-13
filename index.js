@@ -82,7 +82,7 @@ const remindToMerge = async (prs) => {
   let message = "";
 
   for (const pr of prs) {
-    message += `Hey @${pr.user.login}, the PR "${pr.title}" is waiting for your merge: [${pr.html_url}](${pr.html_url})\n`;
+    message += `Hey @${pr.user.login}, the PR "${pr.title}" is ready to be merged: [${pr.html_url}](${pr.html_url})\n`;
   }
 
   if (!message) {
