@@ -36,7 +36,7 @@ const hasEnoughApprovals = async (pr) => {
 const getPrsEligbleForReminder = async (prs) => {
   const ret = [];
 
-  for(const pr in prs) {
+  for(const pr of prs) {
     if (await hasEnoughApprovals(pr)) {
       continue;
     }
@@ -56,7 +56,7 @@ const remind = async (pr) => {
     const prsEligbleForReminder = await getPrsEligbleForReminder(prs);
     info(`A total of ${prsEligbleForReminder} are elgible for a reminder.`);
 
-    for(const pr in prsEligbleForReminder) {
+    for(const pr of prsEligbleForReminder) {
       await remind(pr);
     }
   } catch (error) {
