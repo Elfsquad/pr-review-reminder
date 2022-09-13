@@ -6,15 +6,10 @@ const octokit = getOctokit(token);
 const approvalCount = getInput('approval-count');
 
 const getPrs = async () => {
-  const test = await octokit.rest.repos.getLatestRelease({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-  });
-  info(test.data.tag_name);
-
   return await octokit.rest.pulls.list({
     owner: context.repo.owner,
-    repo: context.repo.repo
+    repo: context.repo.repo,
+    state: 'open'
   });
 }
 

@@ -8496,15 +8496,10 @@ const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(toke
 const approvalCount = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('approval-count');
 
 const getPrs = async () => {
-  const test = await octokit.rest.repos.getLatestRelease({
-    owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
-    repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
-  });
-  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(test.data.tag_name);
-
   return await octokit.rest.pulls.list({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
-    repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo
+    repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
+    state: 'open'
   });
 }
 
