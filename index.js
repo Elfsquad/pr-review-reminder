@@ -59,6 +59,7 @@ const remind = async (pr) => {
       await remind(pr);
     }
   } catch (error) {
+    throw error;
     setFailed(error.message);
   }
 })();
