@@ -50,7 +50,7 @@ const getPrsEligbleForReminder = async (prs) => {
 }
 
 const sendNotification = async (message) => {
-  return axios({
+  return await axios({
     method: 'POST',
     url: webhookUri,
     data: {
@@ -69,7 +69,7 @@ const remindToReview = async (prs) => {
       message += `Hey @${reviewer.login}, the PR "${pr.name}" is wating for your review: [${obj.url}](${obj.url})`;
     }
   }
-  sendNotification(message);
+  await sendNotification(message);
 }
 
 const remindToMerge = async (prs) => {
