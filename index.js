@@ -11,16 +11,16 @@ const getPrs = async () => {
     repo: context.repo.repo,
     state: 'open'
   });
-  info(JSON.stringify(response.data));
   return response.data;
 }
 
 const getReviews = async (pr) => {
-  return await octokit.rest.pulls.listReviews({
+  const response = await octokit.rest.pulls.listReviews({
     owner: context.repo.owner,
     repo: context.repo.repo,
     pull_number: pr.id
   });
+  return response.data;
 }
 
 const hasReviewers = (pr) => {

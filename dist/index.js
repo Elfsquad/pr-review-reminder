@@ -8501,16 +8501,16 @@ const getPrs = async () => {
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
     state: 'open'
   });
-  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(JSON.stringify(response.data));
   return response.data;
 }
 
 const getReviews = async (pr) => {
-  return await octokit.rest.pulls.listReviews({
+  const response = await octokit.rest.pulls.listReviews({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
     pull_number: pr.id
   });
+  return response.data;
 }
 
 const hasReviewers = (pr) => {
