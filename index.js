@@ -15,11 +15,11 @@ const getPrs = async () => {
 }
 
 const getReviews = async (pr) => {
-  info(`Retrieving reviews for ${pr.id}`);
+  info(`Retrieving reviews for ${pr.number}`);
   const response = await octokit.rest.pulls.listReviews({
     owner: context.repo.owner,
     repo: context.repo.repo,
-    pull_number: pr.id
+    pull_number: pr.number
   });
   return response.data;
 }
